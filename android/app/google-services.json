@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1087807785984",
+    "project_id": "handicraft-c2cd7",
+    "storage_bucket": "handicraft-c2cd7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087807785984:android:0a74b06ef2691207ad1ce5",
+        "android_client_info": {
+          "package_name": "com.example.handicraft"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEi-9myuAJ4TCB6KktQqW1GQNKOU_7IQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
