@@ -9,7 +9,6 @@ import '../../features/auth/presentation/pages/forgot_password_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
-import '../../features/profile/presentation/pages/change_password_page.dart';
 import '../../features/workshops/presentation/pages/owner_workshops_page.dart';
 import '../../features/workshops/presentation/pages/workshop_form_page.dart';
 import '../../features/workshops/presentation/pages/browse_workshops_page.dart';
@@ -80,10 +79,6 @@ class AppRouter {
       GoRoute(
         path: editProfile,
         builder: (context, state) => const EditProfilePage(),
-      ),
-      GoRoute(
-        path: changePassword,
-        builder: (context, state) => const ChangePasswordPage(),
       ),
       GoRoute(
         path: ownerWorkshops,

@@ -9,7 +9,6 @@ abstract class ProfileRepository {
   Future<UserModel> updateProfile({
     required String uid,
     required String name,
-    String? bio,
   });
 
   /// Upload a new photo to Firebase Storage and save the URL to Firestore.
@@ -18,9 +17,5 @@ abstract class ProfileRepository {
     required File imageFile,
   });
 
-  /// Re-authenticate then update password in Firebase Auth.
-  Future<void> changePassword({
-    required String currentPassword,
-    required String newPassword,
-  });
+
 }

@@ -10,16 +10,12 @@ abstract class ProfileRemoteDataSource {
   Future<UserModel> updateProfile({
     required String uid,
     required String name,
-    String? bio,
   });
   Future<UserModel> updateProfilePhoto({
     required String uid,
     required File imageFile,
   });
-  Future<void> changePassword({
-    required String currentPassword,
-    required String newPassword,
-  });
+
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -49,11 +45,9 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   Future<UserModel> updateProfile({
     required String uid,
     required String name,
-    String? bio,
   }) async {
     final updates = <String, dynamic>{
       'name': name,
-      'bio': ?bio,
     };
 
     await _users.doc(uid).update(updates);
@@ -92,20 +86,5 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     return getProfile(uid);
   }
 
-  @override
-  Future<void> changePassword({
-    required String currentPassword,
-    required String newPassword,
-  }) async {
-    final fbUser = firebaseAuth.currentUser;
-    if (fbUser == null) throw Exception('No authenticated user found.');
 
-    // Re-authenticate before changing password
-    final credential = EmailAuthProvider.credential(
-      email: fbUser.email!,
-      password: currentPassword,
-    );
-    await fbUser.reauthenticateWithCredential(credential);
-    await fbUser.updatePassword(newPassword);
-  }
 }

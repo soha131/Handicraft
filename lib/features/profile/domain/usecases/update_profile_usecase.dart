@@ -8,7 +8,6 @@ class UpdateProfileUseCase {
   Future<UserModel> call({
     required String uid,
     required String name,
-    String? bio,
   }) =>
-      repository.updateProfile(uid: uid, name: name, bio: bio);
+      repository.updateProfile(uid: uid, name: name);
 }

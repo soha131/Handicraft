@@ -29,7 +29,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
           email: 'user@handicraft.app',
           role: 'learner',
           createdAt: DateTime.now(),
-          bio: 'Passionate about handcrafted arts.',
         );
       }
       rethrow;
@@ -43,7 +42,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     String? bio,
   }) async {
     try {
-      return await remoteDataSource.updateProfile(uid: uid, name: name, bio: bio);
+      return await remoteDataSource.updateProfile(uid: uid, name: name);
     } catch (e) {
       if (_isFirebaseConfigError(e)) {
         return UserModel(
@@ -52,7 +51,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
           email: 'user@handicraft.app',
           role: 'learner',
           createdAt: DateTime.now(),
-          bio: bio,
         );
       }
       rethrow;
@@ -82,21 +80,4 @@ class ProfileRepositoryImpl implements ProfileRepository {
     }
   }
 
-  @override
-  Future<void> changePassword({
-    required String currentPassword,
-    required String newPassword,
-  }) async {
-    try {
-      await remoteDataSource.changePassword(
-        currentPassword: currentPassword,
-        newPassword: newPassword,
-      );
-    } catch (e) {
-      if (_isFirebaseConfigError(e)) {
-        return; // No-op in dev mode
-      }
-      rethrow;
-    }
-  }
 }

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/usecases/get_profile_usecase.dart';
 import '../../domain/usecases/update_profile_usecase.dart';
 import '../../domain/usecases/update_profile_photo_usecase.dart';
-import '../../domain/usecases/change_password_usecase.dart';
 import '../../../auth/data/models/user_model.dart';
 import 'profile_state.dart';
 
@@ -12,13 +11,11 @@ class ProfileCubit extends Cubit<ProfileState> {
   final GetProfileUseCase getProfileUseCase;
   final UpdateProfileUseCase updateProfileUseCase;
   final UpdateProfilePhotoUseCase updateProfilePhotoUseCase;
-  final ChangePasswordUseCase changePasswordUseCase;
 
   ProfileCubit({
     required this.getProfileUseCase,
     required this.updateProfileUseCase,
     required this.updateProfilePhotoUseCase,
-    required this.changePasswordUseCase,
   }) : super(ProfileInitial());
 
   /// Load the current user's profile from Firestore.
@@ -37,18 +34,17 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileLoaded(user));
   }
 
-  /// Update display name and optional bio.
+  /// Update display name
   Future<void> updateProfile({
     required String uid,
     required String name,
-    String? bio,
   }) async {
     final current = _currentUser();
     if (current == null) return;
 
     emit(ProfileUpdating(current));
     try {
-      final updated = await updateProfileUseCase(uid: uid, name: name, bio: bio);
+      final updated = await updateProfileUseCase(uid: uid, name: name);
       emit(ProfileUpdateSuccess(updated, 'Profile updated successfully!'));
     } catch (e) {
       emit(ProfileError(_clean(e)));
@@ -69,25 +65,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  /// Change the Firebase Auth password after re-authentication.
-  Future<void> changePassword({
-    required String currentPassword,
-    required String newPassword,
-  }) async {
-    final current = _currentUser();
-    if (current == null) return;
 
-    emit(ProfileUpdating(current));
-    try {
-      await changePasswordUseCase(
-        currentPassword: currentPassword,
-        newPassword: newPassword,
-      );
-      emit(PasswordChangeSuccess());
-    } catch (e) {
-      emit(ProfileError(_clean(e)));
-    }
-  }
 
   /// Get current UserModel from state (if loaded).
   UserModel? _currentUser() {
